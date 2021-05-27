@@ -1,0 +1,31 @@
+.wrp {
+  font-size: 14px;
+  position: relative;
+}
+
+.wrp label {
+  float: left;
+  top: 50%; left: 0px;
+  position: absolute;
+  display: inline-block;
+  white-space: pre;
+  transform: translateY(-50%);
+  font-weight: 300;
+  font-color: #ddd;
+}
+
+.wrp select {
+  width: 40px;
+  height: 26px;
+  border: none;
+  float: right;
+  background-color: white;
+  outline: none;
+}
+
+select option {
+  text-align: center;
+  color: black;
+}
+
+

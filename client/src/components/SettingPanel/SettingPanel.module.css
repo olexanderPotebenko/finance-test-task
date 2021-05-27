@@ -1,0 +1,63 @@
+.change-block {
+  width: 100%;
+  height: 52px;
+  margin-bottom: 4px;
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 1fr 70px 190px;
+  grid-template-rows: 1fr;
+  align-items: center;
+  grid-template-areas: 'lnm atb chi';
+}
+
+.add-ticker {
+  width: 60px;
+  height: 36px;
+  font: inherit;
+  font-size: 14px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.add-ticker-plus {
+  margin-right: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 0px;
+}
+
+.list-name {
+  justify-self: start;
+  display: inline-block;
+  float: left;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .change-block {
+    height: 72px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 30% 70%;
+    grid-template-areas: 
+    'lnm lnm'
+    'atb chi';
+  }
+  .change-interval {
+    justify-self: end;
+    margin-right: 5px;
+  }
+  .list-name {
+    margin-left: 5px;
+  }
+  .add-ticker {
+    justify-self: start;
+  }
+}
+
+.list-name       { grid-area: lnm; }
+.add-ticker      { grid-area: atb; }
+.change-interval { grid-area: chi; }
+

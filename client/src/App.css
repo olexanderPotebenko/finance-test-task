@@ -1,38 +1,81 @@
 .App {
   text-align: center;
+  font-size: 16px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.blue-color {
+  color: #1a73e8;
+}
+.blue-button {
+  color: #1a73e8;
+  background-color: rgba(26, 115, 232, .03);
+}
+.blue-button:hover, .blue-button-active {
+  background-color: rgba(26, 115, 232, .1);
+  color: rgba(6, 75, 192, 1);
+}
+.blue-button-active:active {
+  background-color: rgba(26, 115, 232, .2);
+  color: rgba(6, 75, 192, 1);
+}
+.blue-button:active {
+  background-color: rgba(26, 115, 232, .03);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+/*TICKERS*/
+
+.ticker-name {
+  width: 47px;
+  height: 22px;
+  background-color: red;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #fff;
+  font-weight: bold;
+  line-height: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/*exchange*/
+.INDEX  { background-color: white; border: 1px solid black; color: black; }
+.AAPL   { background-color: rgb(102, 102, 102); }
+.MSFT   { background-color: rgb(115, 115, 115); }
+.AMZN   { background-color: rgb(194, 108,   3); }
+.FB     { background-color: rgb( 66, 103, 178); }
+.GOOGL  { background-color: #ED161E; }
+.TSLA   { background-color: #E31937; }
+.AMC    { background-color: #e21a37; }
+.GME    { background-color: #ed3326; }
+
+.exchange {
+  font-size: 14px;
+  font-size: 14px;
+  text-align: left;
 }
 
-.App-link {
-  color: #61dafb;
+.change[direction*=up], .change-percent[direction*=up] {
+  color: #137333;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.change[direction*=down], .change-percent[direction*=down] {
+  color: #a50e0e;
 }
+
+.change-percent span{
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 8px;
+}
+
+.change-percent[direction*=up] span {
+  background-color: #e5f4ea;
+}
+
+.change-percent[direction*=down] span {
+  background-color: #fce8e6;
+}
+
+.price, .change, .change-percent {
+  text-align: right;
+}
+

@@ -1,0 +1,14 @@
+.wrp {
+  max-width: 800px;
+  min-width: 300px;
+  height: 100vh;
+  margin: auto;
+  padding: 25px 15px;
+}
+
+@media (max-width: 600px) {
+  .wrp {
+  padding: 15px 5px;
+  }
+}
+
