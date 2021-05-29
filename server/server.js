@@ -8,7 +8,7 @@ const multer = require('multer') // v1.0.5
 const upload = multer() // for parsing multipart/form-data
 
 let FETCH_INTERVAL = 3000;
-const possibleIntervals = [1000, 3000, 4000, 5000, 7000];
+const possibleIntervals = [1000, 3000, 5000, 7000, 9000];
 const PORT = process.env.PORT || 4000;
 
 const tickers = [
@@ -66,6 +66,17 @@ function trackTickers(socket) {
   socket.on('disconnect', function() {
     clearInterval(timer);
   });
+
+  // update time if FETC_INTERWAL was changed
+  const save = FETCH_INTERVAL;
+  const heandler = setInterval(() => {
+    if(save !== FETCH_INTERVAL) {
+      clearInterval(timer);
+      clearInterval(heandler);
+      socket.removeAllListeners('disconnect');
+      trackTickers(socket);
+    };
+  }, 1000);
 }
 
 const app = express();
@@ -126,7 +137,7 @@ app.delete('/tickers', function(req, res) {
 });
 //interval
 app.get('/interval', function(req, res) {
-  res.send({interval: FETCH_INTERVAL});
+  res.send({interval: FETCH_INTERVAL, possibleIntervals});
 });
 
 app.put('/interval', function(req, res) {
@@ -140,7 +151,8 @@ app.put('/interval', function(req, res) {
     res.send({status_code: 1, message});
   } else {
     message = `the new value for the interval is ${req.body.interval/1000} seconds`;
-    res.send({status_code: 0, message});
+    res.send({status_code: 0, message, interval: req.body.interval});
+    FETCH_INTERVAL = req.body.interval;
   };
   console.log(message);
 });
