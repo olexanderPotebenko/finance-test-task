@@ -2,48 +2,79 @@ import React from 'react';
 
 import styles from './AddList.module.css';
 import {rubiconsX, rubiconsArrowUp, rubiconsArrowDown} from '../../../images/svg.js';
+import {tickerApi} from '../../../api/api.js';
 
-const AddList = props => {
+class AddList extends React.Component {
 
-  const selectTicker = (ticker) => {
-    props.deleteIgnore(ticker);
-  };
+  componentDidMount () {
+    this.setState({isFetching: true});
+    tickerApi.getTickers({})
+      .then(response => {
+        this.setState({
+          isFetching: false,
+          tickers: response.tickers,
+        });
+      });
+  }
 
+  state = {
+    isFetching: false,
+    tickers: [],
+  }
 
-  let tickers = props.tickers.map(ticker => 
-    <div className={styles.item} onClick={() => selectTicker(ticker.ticker)}>
-      <div className={styles['item-left']}>
-        <div className={styles['item-name']}>
-          {ticker.ticker}
-        </div>
-        <div className={styles['exchange']}>
-          {ticker.exchange}
-        </div>
-      </div>
-      <div className={styles['item-price']}>
-        {'$' + ticker.price}
-      </div>
-      <div className={'change-percent'} direction={ticker.direction}>
+  render () {
+
+    const onSelectTicker = (ticker) => {
+      this.props.allowTicker({ticker});
+      this.props.setEditMode(false);
+    };
+
+    let tickers = this.state.tickers
+      .filter(ticker => !this.props.tickers
+        .find(myticker => myticker.ticker === ticker.ticker))
+      .map(ticker => <Ticker {...ticker} key={Math.random()} onSelectTicker={onSelectTicker.bind(this, ticker.ticker)}/>);
+
+    let phrase = this.state.isFetching?'Get available tickers..':
+      (tickers.length?'Choose from the list':"You can't add anything else");
+
+    return <div className={styles.wrp}>
+      <div className={styles.head}>
         <span>
-          {ticker.direction === 'up' && rubiconsArrowUp || rubiconsArrowDown}
-          {ticker.change_percent + '%'}
+          {phrase}
         </span>
+        <button className={styles['close-button']}>
+          {rubiconsX}
+        </button>
       </div>
-    </div>);
-
-  return <div className={styles.wrp} onblur={() => alert()}>
-    <div className={styles.head}>
-      <span>
-        {tickers.length && 'Choose from the list' || "You can't add anything else"}
-      </span>
-      <button className={styles['close-button']}>
-        {rubiconsX}
-      </button>
+      <div className={styles.list}>
+        {tickers}
+      </div>
     </div>
-    <div className={styles.list}>
-      {tickers}
+  };
+};
+
+const Ticker = props => {
+
+  return <div className={styles.ticker} key={Math.random()*1000}
+    onClick={props.onSelectTicker}>
+    <div className={styles['ticker-left']}>
+      <div className={styles['ticker-name']}>
+        {props.ticker}
+      </div>
+      <div className={styles.exchange}>
+        {props.exchange}
+      </div>
+    </div>
+    <div className={styles['ticker-price']}>
+      {'$' + props.price}
+    </div>
+    <div className={styles['change-percent']} direction={props.direction}>
+      <span>
+        {props.direction === 'up' && rubiconsArrowUp || rubiconsArrowDown}
+        {props.change_percent + '%'}
+      </span>
     </div>
   </div>
-}
+};
 
 export default AddList;

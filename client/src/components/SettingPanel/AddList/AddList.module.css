@@ -39,7 +39,7 @@
   0 8px 12px rgb(60 64 67 / 15%);
 }
 
-.item {
+.ticker {
   height: 57px;
   border-top: 1px solid #ddd;
   padding: 0 20px;
@@ -50,19 +50,19 @@
   align-items: center;
 }
 
-.item:hover {
+.ticker:hover {
   background-color: rgba(0, 0, 0, .05);
 }
 
-.item:last-child {
+.ticker:last-child {
   padding-bottom: 8px;
 }
 
-.item-price {
+.ticker-price {
   font-size: 14px;
 }
 
-.item-name {
+.ticker-name {
   font-size: 14px;
   text-align: left;
   margin-bottom: 8px;
@@ -72,6 +72,32 @@
   font-size: 11px;
   text-align: left;
   color: #5f6368;
+}
+
+.change-percent[direction*=up] {
+  color: #137333;
+}
+
+.change-percent[direction*=down] {
+  color: #a50e0e;
+}
+
+.change-percent span{
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 8px;
+}
+
+.change-percent[direction*=up] span {
+  background-color: #e5f4ea;
+}
+
+.change-percent[direction*=down] span {
+  background-color: #fce8e6;
+}
+
+.change-percent {
+  text-align: right;
 }
 
 .close-button {

@@ -11,6 +11,10 @@
   grid-template-areas: 'lnm atb chi';
 }
 
+.list-name       { grid-area: lnm; }
+.add-ticker      { grid-area: atb; }
+.change-interval { grid-area: chi; }
+
 .add-ticker {
   width: 60px;
   height: 36px;
@@ -39,7 +43,7 @@
 @media (max-width: 600px) {
   .change-block {
     height: 72px;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 190px;
     grid-template-rows: 30% 70%;
     grid-template-areas: 
     'lnm lnm'
@@ -56,8 +60,3 @@
     justify-self: start;
   }
 }
-
-.list-name       { grid-area: lnm; }
-.add-ticker      { grid-area: atb; }
-.change-interval { grid-area: chi; }
-

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import styles from './SettingPanel.module.css';
 import AddList from './AddList/AddList.jsx';
 import ChangeInterval from './ChangeInterval/ChangeInterval.jsx';
-import {deleteIgnore} from '../../reducers/tickerReducer.js';
+import {allowTicker} from '../../reducers/tickerReducer.js';
 
 class SettingPanel extends React.Component {
 
@@ -12,14 +12,13 @@ class SettingPanel extends React.Component {
     editMode: false,
   }
 
-  setEditMode = editMode => {
-    this.setState({editMode});
+  setEditMode = editMode => this.setState({editMode})
+
+  onButtonClick = () => {
+    if(!this.state.editMode)
+      this.setEditMode(true);
   }
-
-  render() { 
-
-    let tickers = this.props.tickers.filter(ticker => 
-      this.props.ignore.includes(ticker.ticker));
+  render() {
 
     return <div className={styles['change-block']}>
       <div className={styles['list-name']}>
@@ -27,14 +26,14 @@ class SettingPanel extends React.Component {
       </div>
       <button className={`${styles['add-ticker']} blue-button`}
         onBlur={(e) => this.setEditMode(false)}
-        onClick={this.setEditMode.bind(this, true)}>
+        onClick={this.onButtonClick}>
           <span className={styles['add-ticker-plus']}>+</span>
           <span className={styles['add-ticker-add']}>Add</span>
-        { this.state.editMode && 
+        { this.state.editMode &&
             <AddList
-          setEditMode={this.setEditMode.bind(this, false)}
-        deleteIgnore={this.props.deleteIgnore.bind(this)}
-        tickers={tickers}/> }
+          setEditMode={this.setEditMode.bind(this)}
+        allowTicker={this.props.allowTicker.bind(this)}
+        tickers={this.props.tickers}/> }
       </button>
       <ChangeInterval />
     </div>
@@ -44,9 +43,8 @@ class SettingPanel extends React.Component {
 const mapStateToProps = state => {
   return {
     tickers: state.tickersState.tickers,
-    ignore: state.tickersState.ignore,
   };
 };
 
-export default connect(mapStateToProps, {deleteIgnore})(SettingPanel);
+export default connect(mapStateToProps, {allowTicker})(SettingPanel);
 
